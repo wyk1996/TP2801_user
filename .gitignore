@@ -1,0 +1,26 @@
+#VIM
+tags
+types_c.taghl
+
+#IAR
+pro/Debug/*
+pro/settings/*
+pro/*ewd
+pro/*ewt
+pro/*dep
+
+#KEIL
+MDK-ARM/lst/*
+MDK-ARM/obj/*
+*uvgui*
+
+MDK-ARM/Listings/*
+MDK-ARM/Objects/*
+MDK-ARM/JLinkLog.txt
+*uvgui*
+*.PcbDoc.htm
+*.PcbDocPreview
+*.SchDocPreview
+
+#VS code
+#.vscode

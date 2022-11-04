@@ -1,0 +1,805 @@
+#ifndef _DEVICE_H
+#define _DEVICE_H
+#include "main.h"
+
+
+#define DEVICE_INFO   (9 * 1024)      //FLASH数据存储起始地址
+
+
+#define recive_len   350   //串口接收数组长度
+#define recive_len1  64   //串口接收数组长度
+#define output_len   256   //串口发送数组长度
+#define output_len1  350   //串口发送数组长度
+
+#define LCD_IT        (1 << 0)
+#define SEN_IT        (1 << 1)
+#define SLEE_IT       (1 << 2)
+#define NET_IT        (1 << 3)
+#define OFF_IT        (1 << 4)
+#define lora_IT       (1 << 5)
+#define loraset_IT    (1 << 6)
+
+#define EVENT_OK      (1)
+#define EVENT_RUN     (0)
+
+//NB服务器类型定义  sever_type
+#define NB_tlink        0     
+#define NB_onenet       1
+#define NB_telecom      2
+#define tlink_open      3
+#define tlink_close     4
+ //硬件版本   tab_model  
+#define TP240XVX_3           0x01
+#define TP240XVX_3_P         0x02   
+#define TP240XVX_3_Ex        0x03
+#define TP240XVX_3_P_Ex      0x04
+
+//传感器类型 tab_sensor
+#define D032              0x01    
+#define TP2305V2          0x02
+#define TP2302V2          0x03
+#define TP2303V1          0x04
+#define D035              0x05
+#define TP2321            0x06
+#define TP2321_1          0x07
+#define TP2323            0x08
+#define TP2312            0x09
+#define TP2319            0x0A
+#define W_MODBUS          0x0B
+#define YW_ZDY            0x0C   //液位自定义量程类型
+#define D036              0x0D   //新版本液位
+#define TP2315            0x0E  //水浸传感器
+//外部W_MODBUS_SENSOR传感器类型
+#define M_TDS             0x01     //电导率传感器
+#define M_PH              0x02     //PH传感器
+
+//通讯模块tab_module
+#define NULL1             0x01   
+#define BC26              0x02
+#define BC20              0x03
+#define EC25              0x04
+#define EC200T            0x05
+#define TP307V1_1_A       0x06
+
+//连接协议 tab_protocol
+#define NBIOT             0x01
+#define MQTT              0x02
+#define TCP               0x03
+#define LORA              0x04
+#define MODBUS            0x05
+#define UDP               0x06
+
+#define OFF            0x00
+#define ON             0x01
+#define CLR            0x02
+
+
+//显示单位
+#define UNIT_MPa       0x00
+#define UNIT_KPa       0x01
+#define UNIT_Pa        0x02
+#define UNIT_bar       0x03
+#define UNIT_psi       0x04
+#define UNIT_psf       0x05
+
+#define UNIT_ppm       0x06
+#define UNIT_ppb       0x07
+
+#define UNIT_V         0x08
+#define UNIT_mA        0x09
+
+#define UNIT_mm        0X0A
+#define UNIT_M         0X0B
+
+#define UNIT_C         0X0C    //℃
+#define UNIT_F         0X0D
+#define UNIT_dp        0X0E
+#define UNIT_BF        0X0F    //%
+
+#define UNIT_0         0X10   // 不显示单位
+
+//网络运营商device_operator
+#define CHN_Telecom       0x01   //中国电信
+#define CHN_Mobile        0x02   //中国移动
+#define CHN_Unicom        0x03   //中国联通
+#define ATO_Search        0x04   //自动搜网
+
+
+
+typedef struct 
+{ 
+	/* 报警向量*/
+	uint8_t sen2up;
+	uint8_t sen2down;
+	uint8_t sen2_f;
+	uint8_t sen1up;
+	uint8_t sen1down;
+	uint8_t sen1_f;
+	uint8_t senerror;
+	uint8_t flasherror;
+  uint8_t powerlow;
+	uint8_t MPU_MOT;    //设备有运动报警标志位
+	uint8_t tab_shock;   //设备震动报警标志位
+}
+alarm;
+
+
+typedef enum
+{	 
+	err_ok             =(0),
+	err_link   	       =(1<<1),			/*  */
+	err_net    	       =(1<<2),			/*网络信号ErrCode*/
+	err_srv 	         =(1<<3),			/*连接服务器ErrCode*/
+	err_sim            =(1<<4),		  /*SIM卡错误*/
+  err_signal         =(1<<5),
+	err_close          =(1<<6),
+	err_send           =(1<<7)
+} 
+g_err;
+typedef enum 
+{
+	new_SAVE = 0,
+	new_REST,
+	new_CLEAR_HIST,
+	new_local_set,
+	new_MODEL,	
+	new_MODULE,
+	new_SENSOR,
+	new_MODBUSSEN,
+	new_sensor1_RANGE_P,
+	new_sensor2_RANGE_P,
+	new_sensor1_RANGE_L,
+	new_sensor1_RANGE_H,
+	new_sensor2_RANGE_L,
+	new_sensor2_RANGE_H,
+	new_OEM,
+	
+	new_BULID_TIME,
+	new_BULID_Version,
+	
+	new_LOG   = 50
+}
+new_CORE;
+ //2G/4G
+typedef enum 
+{
+	mqtt_SAVE = 0,
+	mqtt_REST,
+	mqtt_CLEAR_HIST,
+	
+	mqtt_local_read,
+	mqtt_MODEL,
+	mqtt_SENSOR,
+	mqtt_IMEI,
+	mqtt_IMSI,
+	mqtt_ICCID,
+	mqtt_CBC,
+	mqtt_CSQ,
+	
+	mqtt_S1_value,
+	mqtt_S2_value,
+	mqtt_mpu_gx,
+	mqtt_mpu_gy,
+	mqtt_mpu_gz,
+	mqtt_new_time,
+	
+	mqtt_SRV_SETT,
+	mqtt_SRV_OPERATOR,
+	mqtt_SRV_PROTOCOL,
+	mqtt_SRV_ADDR,
+	mqtt_SRV_PORT,
+	mqtt_SRV_LOGIN,
+	mqtt_SRV_USERNAME,
+	mqtt_SRV_PASSWORD,
+	mqtt_SRV_TOPIC,
+	mqtt_SRV_SUBSCRIPTION,
+	mqtt_SIM_PIN,
+	mqtt_SIM_PUK,
+	mqtt_APN,
+	mqtt_APN_USER_NAME,
+	mqtt_APN_USER_PASS,
+		
+	mqtt_SYS_SETT,
+	
+	mqtt_SRV_TIME,
+	mqtt_SAM_TIME,
+	mqtt_DIP_NUM,
+	mqtt_device_dabao,
+	mqtt_device_mpu,
+	mqtt_device_shock,
+	
+	mqtt_S1_RANGE,
+	mqtt_S2_RANGE,
+	mqtt_S1_UNIT,
+	mqtt_S2_UNIT,
+	mqtt_eliminate_signal,
+	mqtt_sensor_clear_f,
+	mqtt_S1_CORRECT,
+	mqtt_S2_CORRECT,
+
+	mqtt_ALARM_SEET,  
+	mqtt_shock_alarm,
+	mqtt_S1_UP,
+	mqtt_S1_DOWN,
+	mqtt_S2_UP,
+	mqtt_S2_DOWN,
+
+	mqtt_S1_fluctuate,
+	mqtt_S2_fluctuate,
+	
+  mqtt_fluctuate_dowm_S1,
+	mqtt_fluctuate_dowm_S2,
+	
+	mqtt_vbat_reset,
+		
+	mqtt_BULID_TIME,
+	mqtt_BULID_Version,
+	
+	mqtt_LOG   = 255
+}
+mqtt_CORE;
+typedef enum 
+{
+	tcp_SAVE = 0,
+	tcp_REST,
+	tcp_CLEAR_HIST,
+	
+	tcp_local_read,
+	tcp_MODEL,
+	tcp_SENSOR,
+	tcp_IMEI,
+	tcp_IMSI,
+	tcp_ICCID,
+	tcp_CBC,
+	tcp_CSQ,	
+	tcp_S1_value,
+	tcp_S2_value,
+	tcp_mpu_gx,
+	tcp_mpu_gy,
+	tcp_mpu_gz,
+	tcp_new_time,
+	
+	tcp_SRV_SETT,
+	tcp_SRV_OPERATOR,
+	tcp_SRV_PROTOCOL,
+	tcp_SRV_ADDR,
+	tcp_SRV_PORT,
+	tcp_SRV_LOGIN,
+	tcp_SIM_PIN,
+	tcp_SIM_PUK,
+	tcp_APN,
+	tcp_APN_USER_NAME,
+	tcp_APN_USER_PASS,
+	
+	tcp_SYS_SETT,
+	tcp_SRV_TIME,
+	tcp_SAM_TIME,
+	tcp_DIP_NUM,
+	tcp_device_dabao,
+	tcp_device_mpu,
+	tcp_device_shock,
+	tcp_S1_RANGE,
+	tcp_S2_RANGE,
+	tcp_S1_UNIT,
+	tcp_S2_UNIT,
+	tcp_eliminate_signal,
+	tcp_sensor_clear_f,
+	tcp_S1_CORRECT,
+	tcp_S2_CORRECT,
+	
+	tcp_ALARM_SEET,
+	tcp_shock_alarm,
+	tcp_S1_UP,
+	tcp_S1_DOWN,
+	tcp_S2_UP,
+	tcp_S2_DOWN,
+	tcp_S1_fluctuate,
+	tcp_S2_fluctuate,
+  tcp_fluctuate_dowm_S1,
+	tcp_fluctuate_dowm_S2,
+	
+	tcp_vbat_reset,
+	
+	tcp_BULID_TIME,
+	tcp_BULID_Version,
+	
+	tcp_LOG   = 255
+}
+tcp_CORE;
+//NB
+typedef enum 
+{
+	nb_SAVE = 0,
+	nb_REST,
+	nb_CLEAR_HIST,
+	
+	nb_local_read,
+	nb_MODEL,
+	nb_SENSOR,
+	nb_IMEI,
+	nb_IMSI,
+	nb_ICCID,
+	nb_CBC,
+	nb_CSQ,
+	nb_CESQ,
+	
+	nb_S1_value,
+	nb_S2_value,
+	nb_mpu_gx,
+	nb_mpu_gy,
+	nb_mpu_gz,
+	nb_mpu_ax,
+	nb_mpu_ay,
+	nb_mpu_az,
+	nb_new_time,
+	
+	nb_SRV_SETT,
+	nb_SRV_OPERATOR,
+	nb_SRV_PROTOCOL,
+	nb_SRV_TYPE,
+	nb_SRV_ADDR,
+	nb_SRV_PORT,
+	nb_SRV_LOGIN,
+	nb_SIM_PIN,
+	nb_SIM_PUK,
+	nb_APN,
+	nb_APN_USER_NAME,
+	nb_APN_USER_PASS,
+		
+	nb_SYS_SETT,
+	
+	nb_SRV_TIME,
+	nb_SAM_TIME,
+	nb_DIP_NUM,
+  nb_device_dabao,
+	nb_device_mpu,
+	nb_device_shock,
+	nb_S1_RANGE,
+	nb_S2_RANGE,
+	nb_S1_UNIT,
+	nb_S2_UNIT,
+	nb_eliminate_signal,
+	nb_sensor_clear_f,
+	nb_S1_CORRECT,
+	nb_S2_CORRECT,
+
+	nb_ALARM_SEET,
+  nb_shock_alarm,
+	nb_S1_UP,
+	nb_S1_DOWN,
+	nb_S2_UP,
+	nb_S2_DOWN,
+
+	nb_S1_fluctuate,
+	nb_S2_fluctuate,
+	
+  nb_fluctuate_dowm_S1,
+	nb_fluctuate_dowm_S2,
+	
+	nb_device_restart_num,
+	nb_vbat_reset,
+		
+	nb_BULID_TIME,
+	nb_BULID_Version,
+	
+	nb_LOG   = 255
+}
+nb_CORE;
+//LORA
+typedef enum 
+{
+	lora_SAVE = 0,
+	lora_REST,
+	lora_CLEAR_HIST,
+	
+	lora_local_read,
+	lora_MODEL,
+	lora_SENSOR,	
+	lora_once,
+	lora_rerty,
+	lora_updata,
+	lora_upack,
+	lora_num,
+	lora_slot,
+	lora_time,
+	lora_pwrtime,
+	lora_vbat,
+	lora_qsignal,
+	
+	lora_S1_value,
+	lora_S2_value,
+	lora_mpu_gx,
+	lora_mpu_gy,
+	lora_mpu_gz,
+	lora_new_time,
+	
+	lora_SRV_SETT,
+	lora_SRV_NS,
+	lora_SRV_NETID,
+	lora_SRV_TX_POWER,
+	lora_SRV_speed,
+	lora_SRV_m_band,
+
+	lora_SYS_SETT,
+	
+	lora_SRV_TIME,
+	lora_SAM_TIME,
+	lora_DIP_NUM,
+	lora_device_mpu,
+	lora_device_shock,
+	
+  lora_S1_RANGE,
+	lora_S2_RANGE,
+	lora_S1_UNIT,
+	lora_S2_UNIT,
+	lora_eliminate_signal,
+	lora_sensor_clear_f,
+	lora_S1_CORRECT,
+	lora_S2_CORRECT,
+
+	lora_ALARM_SEET,
+  lora_shock_alarm,
+	lora_S1_UP,
+	lora_S1_DOWN,
+	lora_S2_UP,
+	lora_S2_DOWN,
+
+	lora_S1_fluctuate,
+	lora_S2_fluctuate,
+	
+  lora_fluctuate_dowm_S1,
+	lora_fluctuate_dowm_S2,
+	
+	lora_vbat_reset,
+	
+	lora_BULID_TIME,
+	lora_BULID_Version,
+	
+	lora_LOG   = 255
+}
+lora_CORE;
+//MODBUS
+typedef enum 
+{
+	mdbus485_SAVE = 0,
+	mdbus485_REST,
+	mdbus485_CLEAR_HIST,
+	
+	mdbus485_local_read,
+	mdbus485_MODEL,
+	mdbus485_SENSOR,
+	mdbus485_S1_value,
+	mdbus485_S2_value,
+	mdbus485_new_time,
+	mdbus485_CBC,
+	mdbus485_CSQ,
+	
+	mdbus485_SRV_SETT,
+	mdbus485_SRV_addr,
+	mdbus485_SRV_band,
+	mdbus485_SRV_parity,
+	mdbus485_SRV_data,
+	mdbus485_SRV_syop,
+
+	mdbus485_SYS_SETT,
+	
+//	mdbus485_SRV_TIME,
+  mdbus485_SAM_TIME,
+	mdbus485_DIP_NUM,
+	
+  mdbus485_S1_RANGE,
+	mdbus485_S2_RANGE,
+	mdbus485_S1_UNIT,
+	mdbus485_S2_UNIT,
+	mdbus485_eliminate_signal,
+	mdbus485_sensor_clear_f,
+	mdbus485_S1_CORRECT,
+	mdbus485_S2_CORRECT,
+
+	mdbus485_ALARM_SEET,
+  mdbus485_shock_alarm,
+	mdbus485_S1_UP,
+	mdbus485_S1_DOWN,
+	mdbus485_S2_UP,
+	mdbus485_S2_DOWN,
+
+	mdbus485_S1_fluctuate,
+	mdbus485_S2_fluctuate,
+	
+  mdbus485_fluctuate_dowm_S1,
+	mdbus485_fluctuate_dowm_S2,
+	mdbus485_BULID_TIME,
+	mdbus485_BULID_Version,
+	
+	mdbus485_LOG   = 255
+}
+mdbus485_CORE;
+
+
+//typedef enum
+//{
+//	IN_SEN = 0,
+//	EX_SEN = 1,
+//}SHOW_PAGE;
+
+
+//#define TOPRIE  0
+//#define DS18B20 1
+//TIME
+typedef struct 
+{ 
+	/* 秒 分 时 周 日 月 年*/
+	uint8_t sec;
+	uint8_t min;
+	uint8_t hour;
+	uint8_t day;
+	uint8_t week;
+	uint8_t month;
+	uint8_t year;
+
+}
+rtc_t;
+
+//配置信息
+typedef struct 
+{
+	uint8_t first_data[2];   //flash验证标志位
+	uint16_t save_len;       //flash存储数据占用空间
+	
+	uint8_t srv_addr[24];   //服务器地址
+	uint8_t srv_port[8];    //端口号
+	uint8_t srv_login[64];     //登录包
+	uint8_t srv_UserName[24];   //MQTT用户名
+	uint8_t srv_Password[24];     //MQTT用户密码
+	uint8_t srv_Topic[24];         //MQTT头文件
+	uint8_t srv_Subacription[24];    //MQTT订阅名
+	
+	uint8_t srv_apn[24];   //APN
+	uint8_t srv_apn_user_name[24];
+	uint8_t srv_apn_user_pass[24];
+	
+	uint8_t srv_sim_pin[24];    //SIM卡PIN码
+	uint8_t srv_sim_puk[24];    //SIM卡PUK码
+		
+	uint8_t sen1_up[8];	     //传感器1上限
+	uint8_t sen1_down[8];    //传感器1下限
+	uint8_t sen2_up[8];      //传感器2上限
+	uint8_t sen2_down[8];    //传感器2下限
+	uint8_t sensor1_C[8];    //传感器1修正参数
+	uint8_t sensor2_C[8];    //传感器2修正参数
+	
+	char sensor1_range_l[8];  //传感器1量程下限
+  char sensor1_range_h[8];  //传感器1量程上限
+	char sensor2_range_l[8];  //传感器2量程下限
+	char sensor2_range_h[8];  //传感器2量程上限
+	
+	uint8_t sensor1_fluctuate[8];    //传感器1波动阈值
+	uint8_t sensor2_fluctuate[8];    //传感器2波动阈值
+	uint8_t fluctuate_dowm_S1[8];	  //传感器1报警回复差值
+	uint8_t fluctuate_dowm_S2[8];    //传感器2报警回复差值
+		
+	uint16_t srv_time;    //数据上传时间
+	uint8_t  sensor1_unit_P;     //传感器1预设单位
+	uint8_t  nop2;     //未使用
+	
+	uint8_t sensor1_unit;    //显示单位
+	uint8_t sensor2_unit;    //显示单位
+	uint8_t sever_type;    //NB_服务器类型
+	uint8_t sensor_clear_flag; 	//传感器自动校0开关  
+	
+	uint8_t eliminate_signal;	   //小信号切除开关	    
+	uint8_t  device_dabao;  //是否开启打包上传标志
+	uint8_t  tab_sensor;      //设备挂接传感器	
+	uint8_t  tab_model;  // 设备型号
+	
+	uint8_t  tab_module;      //设备模块
+	uint8_t  tab_protocol;      //设备通讯协议	
+	uint8_t  modbus_addr;     //modbus地址
+	uint8_t  oem;          //OEM第三方隐藏型号标志
+	
+	uint8_t device_operator;     //网络运营商名称
+	uint8_t W_MODBUS_SENSOR;      //外部MODBUS传感器类型        
+	uint8_t SENSOR_SAM_TIME;      //数据采样间隔
+	uint8_t device_mpu;          //是否开启陀螺仪
+	
+	
+	uint32_t baud;           //modbus波特率
+	uint32_t parity;         //modbus校验类型
+	uint32_t stop_bits;      //modbus停止位
+	uint32_t data_bits;      //modbus数据位
+	
+	float sensor_clear_value;    //传感器校0数据
+	float GNSS_E;
+	float GNSS_N;
+	
+	uint8_t sensor2_unit_P;     //传感器2预设单位
+	uint8_t baojin_EN;      //  暂时未使用 UDP大港油田使用   总报警使能ID   默认0xFF 全开   bit0 压力（sensor2）上限   bit1 压力（sensor2）下限   bit2 压力（sensor2）波动  bit3  预留
+	                         //                                                   bit4 运动报警              bit5 温度（sensor1）上限   bit6 温度（sensor1）下限  bit7  温度（sensor2）波动
+	uint8_t device_shock;          //是否开启振动检测报警功能
+	uint8_t dip_num;          //小数点位数   默认4位
+	
+	uint16_t shock_data;      //震动预警值设置
+	uint16_t  lora_id;      //lora地址
+	
+
+	uint16_t nop7;      //未使用		
+	uint16_t device_crc;  	
+}
+save_param_t;
+/////总大小 0x11c
+//传感器值
+typedef struct /*24 字节 按照温湿度来计算 5min存储一次可存储 455天*/
+{
+	/*温湿度*/
+	float ch1_value;
+	float ch2_value;
+//	float ch3_value;
+//	float ch4_value;
+}
+sensor_value_t;
+
+//其他信息
+typedef struct
+{	
+	rtc_t data_time; 
+	save_param_t save;           /* 保存到eeprom数据 */	 
+		
+	uint8_t event_sensor;  //传感器读取成功标志
+	
+	uint8_t event_flash;   //flash操作激活标志，防止进入休眠
+	uint8_t event_up;    //数据上报激活标志，防止进入休眠
+	uint8_t event_oled;  //数据显示激活标志，防止进入休眠
+	uint8_t event_device;   //传感器读取激活标志，防止进入休眠
+	
+  uint8_t event_again;   //设备重启或者初次上电标志   
+		
+	uint8_t Params_sever;  //上发ICCID 第一次数据 且  用于配置完成发送标志
+	
+  uint8_t alarming_flag;    //报警触发标志位  上报完后清零
+	alarm  alarm_flag_ID;           //报警向量事件ID
+  alarm  alarm_flag_STATUS;           //报警向量事件STATUS
+	
+	uint8_t debug_en;     //串口打印标志
+  uint8_t device_en;   //usb 修改标志    0表示USB修改过   1表示USB控制保存
+	
+  uint8_t led_err_flag;  //显示错误故障标志
+	uint8_t iwdg_flag;    //关机判断标志位
+
+  uint8_t sensor_sam_timer;   //4G打包上传时间计数器
+
+  uint16_t lora_vabt_timer;    //电池电量更新计时器
+//	uint8_t vabt_again;      //新电池插上或者首次上电标志
+	
+	uint8_t w24q32flash_err;
+	
+	uint8_t gps_time;           //gps定位时间间隔
+//	uint16_t NB_GET_TIME;           //NB模块主动获取平台配置信息计时器
+	
+	uint8_t gps_satues;       //gps定位状态指示标志
+	uint8_t out_power;        //可充电版本外部电源接入指示标志
+	
+	uint16_t wait_min;           /* 等待上报Min */
+	uint8_t MCU_statues;          //MCU运行状态    0  开机状态   1 低功耗休眠状态   2 关机状态
+	
+	uint8_t alarm_statue;       //输出控制状态标志
+	uint8_t time_calib;         //时间校准标志
+	
+	uint16_t adc_vddflag;
+	
+	uint32_t  hist_num;
+	uint32_t  save_addr;
+	uint32_t  pend_num;           /* 等待发送数量 */
+  uint32_t  pend_addr;           /* 等待发送数量 */
+//  uint32_t  bak_num;
+//  uint32_t  bak_addr;
+	
+	uint32_t sensor_stime;    //传感器静止时间计数器
+
+
+	sensor_value_t sensor;       /* 传感器数据 */	
+
+  float sensor1_up;
+	float sensor1_down;
+	float sensor1_f;
+	float sensor2_up;
+	float sensor2_down;
+	float sensor2_f;
+	float sensor1_hc;
+	float sensor2_hc;
+	float event_sensor1_data;    //保存sen1上一次的数据
+	float event_sensor2_data;    //保存sen2上一次的数据
+	float vbat_vdd;	
+	//三轴姿态传感器数据
+	float MPU_GX;    //俯仰角  
+	float MPU_GY;    //翻滚角  
+	float MPU_GZ;    //航向角
+	float MPU_AX;    //俯仰角  
+	float MPU_AY;    //翻滚角  
+	float MPU_AZ;    //航向角
+	float SHOCK_AX;    //X轴加速度
+	float SHOCK_AY;    //Y轴加速度
+	float SHOCK_AZ;    //Z轴加速度
+	uint8_t MPU_MOT_DATA;    //设备姿态变动标志位
+	uint8_t MPU_SHOCK_DATA;    //设备震动标志位
+	float MPU_TE;    //MPU温度
+}
+device_t;
+extern device_t device_info;
+uint16_t crc_16(uint8_t *p_buf, uint16_t length);
+
+void device_restart(void);
+void device_clear_hist(void);
+
+static void device_ack_crc(void *front, void *back);
+
+static uint8_t  device_set_strparam(void *params, uint8_t *set_buf, uint16_t params_size, uint16_t set_size);
+
+void device_param_write(save_param_t *p_pram);
+
+void device_param_read(save_param_t *p_pram);
+void device_param_wr(uint8_t *wr_buf);
+//static void device_set_alarm_sw(uint8_t *params);
+void device_set_sever_type(uint8_t *params);
+static void device_get_QSignal(void);
+static void device_get_VBAT(void );
+void device_get_sever_type(void);
+//void device_get_alarm_sw(void);
+void device_param_get(uint8_t param_id);
+void device_param_set(uint8_t *wr_buf);
+void device_rtc_set(uint8_t *wr_buf,rtc_t *rtc_time);
+void device_rtc_get(rtc_t *rtc_time);
+
+void device_perv_addr_set(void);
+uint32_t device_perv_addr_get(void);
+void device_pending_num_set(void );
+uint32_t device_pending_num_get(void);
+uint32_t device_pending_addr_get(void);
+void device_pending_addr_set(uint32_t num);
+//uint32_t device_get_hist_num(void);
+void device_set_hist_num(uint32_t hist_num);
+void device_nbvbat_set(uint32_t vbat);
+uint32_t device_nbvbat_get(void);
+void wait_time(void);
+void device_iwdg_flag_set(uint16_t flag);
+uint32_t device_iwdg_flag__get(void);
+void device_vbat_flag_set(uint16_t flag);
+
+void device_get_name(void );
+void device_set_name(uint8_t *params);
+
+uint32_t device_vbat_flag__get(void);
+
+void device_get_eliminate_signal(void); //小信号开关
+void device_set_eliminate_signal(uint8_t *signal);  //小信号开关 
+	
+uint16_t sys_get_modbus_addr( void );
+void device_get_lora_pwrtime(void);
+void device_get_lora_time(void);
+void device_get_lora_slot(void);
+void device_get_lora_num(void);
+void device_get_lora_upack(void);
+void device_get_lora_updata(void);
+void device_get_lora_retry(void);
+void device_get_lora_once(void);
+uint32_t system_get_baud(void);
+
+uint32_t system_get_parity(void);
+uint32_t system_get_data_bits(void);
+uint32_t system_get_stop_bits(void);
+
+//void device_bak_flahnum_set(uint32_t flag_num);
+//uint32_t device_bak_flahnum_get(void);
+//void device_bak_flahaddr_set(uint32_t flag_addr);
+//uint32_t device_bak_flahaddr_get(void);
+void device_set_nb(uint8_t *set_nb_id);
+void device_set_flahaddr_addr(uint32_t flag_addr);
+uint32_t device_get_flahaddr_addr(void);
+
+void device_restart_num_set(uint32_t restart_num);
+uint32_t device_restart_num_get(void);
+	
+void device_get_cesq(void);    //读取信号质量
+void device_get_restart_num(void);    //获取重启次数
+void VBAT_get(void);
+
+#endif

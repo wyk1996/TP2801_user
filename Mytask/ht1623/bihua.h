@@ -1,0 +1,316 @@
+#ifndef _bihua_H
+#define _bihua_H
+
+#include "main.h"
+
+	
+#define	LCD_1A	0X11
+#define	LCD_1B	0X12
+#define	LCD_1C	0X13
+#define	LCD_1D	0X14
+#define	LCD_1E	0X15
+#define	LCD_1F	0X16
+#define	LCD_1G	0X17
+
+#define	LCD_2A	0X21
+#define	LCD_2B	0X22
+#define	LCD_2C	0X23
+#define	LCD_2D	0X24
+#define	LCD_2E	0X25
+#define	LCD_2F	0X26
+#define	LCD_2G	0X27
+
+
+
+#define	LCD_3A	0X31
+#define	LCD_3B	0X32
+#define	LCD_3C	0X33
+#define	LCD_3D	0X34
+#define	LCD_3E	0X35
+#define	LCD_3F	0X36
+#define	LCD_3G	0X37
+
+#define	LCD_4A	0X41
+#define	LCD_4B	0X42
+#define	LCD_4C	0X43
+#define	LCD_4D	0X44
+#define	LCD_4E	0X45
+#define	LCD_4F	0X46
+#define	LCD_4G	0X47
+
+#define	LCD_5A	0X51
+#define	LCD_5B	0X52
+#define	LCD_5C	0X53
+#define	LCD_5D	0X54
+#define	LCD_5E	0X55
+#define	LCD_5F	0X56
+#define	LCD_5G	0X57
+
+#define	LCD_6A	0X61
+#define	LCD_6B	0X62
+#define	LCD_6C	0X63
+#define	LCD_6D	0X64
+#define	LCD_6E	0X65
+#define	LCD_6F	0X66
+#define	LCD_6G	0X67
+
+
+#define	LCD_7A	0X71
+#define	LCD_7B	0X72
+#define	LCD_7C	0X73
+#define	LCD_7D	0X74
+#define	LCD_7E	0X75
+#define	LCD_7F	0X76
+#define	LCD_7G	0X77
+
+
+#define	LCD_8A	0X81
+#define	LCD_8B	0X82
+#define	LCD_8C	0X83
+#define	LCD_8D	0X84
+#define	LCD_8E	0X85
+#define	LCD_8F	0X86
+#define	LCD_8G	0X87
+
+
+#define	LCD_9A	0X91
+#define	LCD_9B	0X92
+#define	LCD_9C	0X93
+#define	LCD_9D	0X94
+#define	LCD_9E	0X95
+#define	LCD_9F	0X96
+#define	LCD_9G	0X97
+
+#define	LCD_10A	0XA1
+#define	LCD_10B	0XA2
+#define	LCD_10C	0XA3
+#define	LCD_10D	0XA4
+#define	LCD_10E	0XA5
+#define	LCD_10F	0XA6
+#define	LCD_10G	0XA7
+
+#define	LCD_11A	0XB1
+#define	LCD_11B	0XB2
+#define	LCD_11C	0XB3
+#define	LCD_11D	0XB4
+#define	LCD_11E	0XB5
+#define	LCD_11F	0XB6
+#define	LCD_11G	0XB7
+
+#define	LCD_12A	0XC1
+#define	LCD_12B	0XC2
+#define	LCD_12C	0XC3
+#define	LCD_12D	0XC4
+#define	LCD_12E	0XC5
+#define	LCD_12F	0XC6
+#define	LCD_12G	0XC7
+
+#define	LCD_13A	0XD1
+#define	LCD_13B	0XD2
+#define	LCD_13C	0XD3
+#define	LCD_13D	0XD4
+#define	LCD_13E	0XD5
+#define	LCD_13F	0XD6
+#define	LCD_13G	0XD7
+
+#define	LCD_14A	0XE1
+#define	LCD_14B	0XE2
+#define	LCD_14C	0XE3
+#define	LCD_14D	0XE4
+#define	LCD_14E	0XE5
+#define	LCD_14F	0XE6
+#define	LCD_14G	0XE7
+
+#define	LCD_15A	0XF1
+#define	LCD_15B	0XF2
+#define	LCD_15C	0XF3
+#define	LCD_15D	0XF4
+#define	LCD_15E	0XF5
+#define	LCD_15F	0XF6
+#define	LCD_15G	0XF7
+
+#define	LCD_T1	0XFF
+#define	LCD_T2	0X01
+#define	LCD_T3	0X02
+#define	LCD_T4	0X03
+#define	LCD_T5	0X04
+#define	LCD_T6	0X05
+#define	LCD_T7	0X06
+#define	LCD_T8	0X07
+#define	LCD_T9	0X08
+#define	LCD_T10	0X09
+#define	LCD_T11 0X0A
+#define	LCD_T12	0X0B
+#define	LCD_T13	0X0C
+#define	LCD_T14	0X0D
+#define	LCD_T15	0X0E
+#define	LCD_T16	0X0F
+#define	LCD_T17	0X10
+#define	LCD_T18 0X20
+#define	LCD_T19	0X30
+#define	LCD_T20	0X40
+#define	LCD_T21	0X50
+#define	LCD_T22	0X60
+#define	LCD_T23	0X70
+#define	LCD_T24	0X80
+#define	LCD_T25	0X90
+#define	LCD_T26	0XA0
+#define	LCD_T27	0XB0
+#define	LCD_T28	0XC0
+#define	LCD_T29	0XD0
+#define	LCD_T30	0XE0
+#define	LCD_T31	0XF0
+#define	LCD_T32	0XF8
+#define	LCD_T33	0XF9
+
+#define LCD_DP11 0XFA
+#define LCD_DP12 0XFB
+#define LCD_DP13 0XFC
+#define LCD_DP14 0XFD
+
+#define LCD_AA 0XAA
+#define LCD_BB 0XBB
+
+#define Num_0_4  0x0f  //1111_1100//abcdef
+#define Num_0_8  0x0f  //1111_1100//abcdef
+
+
+//屏所有笔画代表的值
+//const  uint8_t LCD_SCREEN[36][4]=
+//{
+//  LCD_T1,LCD_1F,LCD_1G,LCD_1E, //0,5
+//  LCD_1A,LCD_1B,LCD_1C,LCD_1D,  //1,6
+//	
+//	LCD_T2,LCD_2F,LCD_2G,LCD_2E, //2,7
+//  LCD_2A,LCD_2B,LCD_2C,LCD_2D,  //3,8
+//	
+//	LCD_T3,LCD_3F,LCD_3G,LCD_3E,//4,9
+//  LCD_3A,LCD_3B,LCD_3C,LCD_3D,//5,10
+//	
+//	LCD_T4,LCD_4F,LCD_4G,LCD_4E,//6,11
+//  LCD_4A,LCD_4B,LCD_4C,LCD_4D,//7,12
+//	
+//	LCD_T5,LCD_5F,LCD_5G,LCD_5E,//8,13
+//  LCD_5A,LCD_5B,LCD_5C,LCD_5D,//9,14
+//	
+//	LCD_T6,LCD_6F,LCD_6G,LCD_6E,//10,15
+//  LCD_6A,LCD_6B,LCD_6C,LCD_6D,//11,16
+//	
+//	LCD_T7,LCD_7F,LCD_7G,LCD_7E,//12,17
+//  LCD_7A,LCD_7B,LCD_7C,LCD_7D,//13,18
+//	
+//	LCD_T8,LCD_8F,LCD_8G,LCD_8E,//14,19
+//  LCD_8A,LCD_8B,LCD_8C,LCD_8D,//15,20
+//	
+//	LCD_T9,LCD_9F,LCD_9G,LCD_9E,//16,21
+//  LCD_9A,LCD_9B,LCD_9C,LCD_9D,//17,22	
+//	
+//	LCD_AA ,LCD_10F,LCD_10G,LCD_10E,//18,23
+//  LCD_10A,LCD_10B,LCD_10C,LCD_10D,//19,24
+
+//LCD_T10,LCD_T11,LCD_T12,LCD_T13, //20,25
+//LCD_T14,LCD_T15,LCD_T16,LCD_T17, //21,26
+
+//LCD_T18,LCD_T19,LCD_T20,LCD_T21, //22,27
+//LCD_T22,LCD_T23,LCD_T24,LCD_T25, //23,28
+
+//LCD_T26,LCD_T27,LCD_T28,LCD_T29, //24,29
+//LCD_T30,LCD_T31,LCD_T32,LCD_T33, //25,30
+
+//  LCD_11A,LCD_11B,LCD_11C,LCD_11D,//26,31
+//  LCD_11F,LCD_11G,LCD_11E,LCD_DP11,//27,32
+
+//  LCD_12A,LCD_12B,LCD_12C,LCD_12D,//28,33
+//  LCD_12F,LCD_12G,LCD_12E,LCD_DP12,//29,34
+
+//  LCD_13A,LCD_13B,LCD_13C,LCD_13D,//30,35
+//  LCD_13F,LCD_13G,LCD_13E,LCD_DP13,//31,36
+//  
+//	LCD_14A,LCD_14B,LCD_14C,LCD_14D,//32,37
+//  LCD_14F,LCD_14G,LCD_14E,LCD_DP14,//33,38
+//	
+//	LCD_15A,LCD_15B,LCD_15C,LCD_15D,//34,39
+//  LCD_15F,LCD_15G,LCD_15E, LCD_BB ,//35,40
+//		
+//};
+const  uint8_t LCD_SCREEN[20][8]=
+{ 
+	LCD_T1,LCD_1F,LCD_1G,LCD_1E,  LCD_15F,LCD_15G,LCD_15E, LCD_BB,  //0,1
+  LCD_1A,LCD_1B,LCD_1C,LCD_1D,  LCD_15A,LCD_15B,LCD_15C,LCD_15D,  //1,2
+	LCD_T2,LCD_2F,LCD_2G,LCD_2E,  LCD_14F,LCD_14G,LCD_14E,LCD_DP14, //2,3
+	LCD_2A,LCD_2B,LCD_2C,LCD_2D,  LCD_14A,LCD_14B,LCD_14C,LCD_14D,  //3,4
+	LCD_T3,LCD_3F,LCD_3G,LCD_3E,  LCD_13F,LCD_13G,LCD_13E,LCD_DP13, //4,5
+	LCD_3A,LCD_3B,LCD_3C,LCD_3D,  LCD_13A,LCD_13B,LCD_13C,LCD_13D,  //5,6
+	LCD_T4,LCD_4F,LCD_4G,LCD_4E,  LCD_12F,LCD_12G,LCD_12E,LCD_DP12, //6, 7
+  LCD_4A,LCD_4B,LCD_4C,LCD_4D,  LCD_12A,LCD_12B,LCD_12C,LCD_12D,   //7,8
+	LCD_T5,LCD_5F,LCD_5G,LCD_5E,  LCD_11F,LCD_11G,LCD_11E,LCD_DP11,//8,9
+  LCD_5A,LCD_5B,LCD_5C,LCD_5D,  LCD_11A,LCD_11B,LCD_11C,LCD_11D,//9,10
+	LCD_T6,LCD_6F,LCD_6G,LCD_6E,  LCD_T10,LCD_T11,LCD_T12,LCD_T13,//10,11
+	
+  LCD_6A,LCD_6B,LCD_6C,LCD_6D,  LCD_BB,LCD_BB,LCD_BB,LCD_BB,//11,12
+	LCD_T7,LCD_7F,LCD_7G,LCD_7E,  LCD_BB,LCD_BB,LCD_BB,LCD_BB,//12,13
+  LCD_7A,LCD_7B,LCD_7C,LCD_7D,  LCD_BB,LCD_BB,LCD_BB,LCD_BB,//13,14
+  LCD_10A,LCD_10B,LCD_10C,LCD_10D, LCD_BB,LCD_BB,LCD_BB,LCD_BB,//14,15
+	
+	LCD_AA ,LCD_10F,LCD_10G,LCD_10E, LCD_T14,LCD_T15,LCD_T16,LCD_T17,//15,16
+	LCD_9A,LCD_9B,LCD_9C,LCD_9D,	LCD_T18,LCD_T19,LCD_T20,LCD_T21,//16,17
+	LCD_T9,LCD_9F,LCD_9G,LCD_9E,  LCD_T22,LCD_T23,LCD_T24,LCD_T25,//17,18
+	LCD_8A,LCD_8B,LCD_8C,LCD_8D,  LCD_T26,LCD_T27,LCD_T28,LCD_T29,//18,19	
+	LCD_T8,LCD_8F,LCD_8G,LCD_8E,  LCD_T30,LCD_T31,LCD_T32,LCD_T33, //19,20
+ 
+};
+//每个8字的对应笔画值
+const   uint8_t  Num_A[15][7]=
+{
+  LCD_1A,LCD_1B,LCD_1C,LCD_1D,LCD_1E,LCD_1F,LCD_1G,           //0
+  LCD_2A,LCD_2B,LCD_2C,LCD_2D,LCD_2E,LCD_2F,LCD_2G,
+  LCD_3A,LCD_3B,LCD_3C,LCD_3D,LCD_3E,LCD_3F,LCD_3G,
+  LCD_4A,LCD_4B,LCD_4C,LCD_4D,LCD_4E,LCD_4F,LCD_4G,
+  LCD_5A,LCD_5B,LCD_5C,LCD_5D,LCD_5E,LCD_5F,LCD_5G,
+  LCD_6A,LCD_6B,LCD_6C,LCD_6D,LCD_6E,LCD_6F,LCD_6G,
+  LCD_7A,LCD_7B,LCD_7C,LCD_7D,LCD_7E,LCD_7F,LCD_7G,
+  LCD_8A,LCD_8B,LCD_8C,LCD_8D,LCD_8E,LCD_8F,LCD_8G,
+  LCD_9A,LCD_9B,LCD_9C,LCD_9D,LCD_9E,LCD_9F,LCD_9G,
+	LCD_10A,LCD_10B,LCD_10C,LCD_10D,LCD_10E,LCD_10F,LCD_10G,    //9
+	
+	LCD_11A,LCD_11B,LCD_11C,LCD_11D,LCD_11E,LCD_11F,LCD_11G,   //10中间数值区域 最右侧
+  LCD_12A,LCD_12B,LCD_12C,LCD_12D,LCD_12E,LCD_12F,LCD_12G,
+  LCD_13A,LCD_13B,LCD_13C,LCD_13D,LCD_13E,LCD_13F,LCD_13G,
+  LCD_14A,LCD_14B,LCD_14C,LCD_14D,LCD_14E,LCD_14F,LCD_14G,
+  LCD_15A,LCD_15B,LCD_15C,LCD_15D,LCD_15E,LCD_15F,LCD_15G,   //中间数值区域 最左侧
+ 
+};
+
+//
+
+//段位对应查表
+//const   uint8_t Seg_vk1072b[18]={0,2,4,6,8,10,12,14,15,16,18,20,22,24,26,28,29,30,};
+//const   uint8_t Seg_HT1621b[36]={0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62,64,66,68,};
+//const   uint8_t Seg_HT1621b[20]={0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19};
+const   uint8_t Seg_HT1621b[21]={0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40};
+#define Num_0  0xFC  //1111_1100//abcdef
+#define Num_1  0X60 //0110_0000//bc
+#define Num_2  0XDA //1101_1010//abged
+#define Num_3  0XF2 //1111_0010//abcdg
+#define Num_4  0X66  //0110_0110//fgbc
+#define Num_5  0XB6  //1011_0110//afgcd
+#define Num_6  0XBE  //1011_1110//afgcde
+#define Num_7  0XE0 //1110_0000//abc
+#define Num_8  0XFE //1111_1110//abcdefg
+#define Num_9  0XF6 //1111_0110//afgbcd
+#define Sign_dec   0x02      //0000_0010g
+#define Sign_dec_one  0x62        //0110_0010  bcg
+#define Sign_        0x10         //0001_0000   d
+#define Sign_o       0x3a         //0011_1010   d
+#define Sign_F       0x8e         //1000_1110   d
+#define Sign_i       0x20         //0010_0000
+#define Sign_d       0x7a         //0111_1010
+#define Sign_S        0XB6  //1011_0110//afgcd
+//数码0-9-abcdefg对应显示的位。
+const uint8_t     Num_0_9[10]={Num_0,Num_1,Num_2,Num_3,Num_4,Num_5,Num_6,Num_7,Num_8,Num_9,};
+const   uint8_t   Signal[2]={Sign_dec,Sign_dec_one};//负号：-，-1
+uint8_t F_flash_flag;
+uint8_t F_flash_cnt;
+
+
+#endif
